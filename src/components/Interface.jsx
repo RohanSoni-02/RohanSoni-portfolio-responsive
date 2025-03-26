@@ -6,7 +6,7 @@ import { currentProjectAtom, projects } from "./Projects";
 import emailjs from '@emailjs/browser';
 import { useState } from "react";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
-
+import { SiLeetcode } from "react-icons/si";
 
 const Section = (props) => {
   const { children, mobileTop } = props;
@@ -359,6 +359,9 @@ const ContactSection = () => {
         </a>
         <a href="mailto:soni.rohanchd@gmail.com">
           <FaEnvelope className="w-10 h-10 text-red-600 hover:text-red-800 transition" />
+        </a>
+        <a href="https://leetcode.com/RohanS02/">
+          <SiLeetcode className="w-10 h-10 text-red-600 hover:text-red-800 transition" />
         </a>
       </div>
     </Section>
