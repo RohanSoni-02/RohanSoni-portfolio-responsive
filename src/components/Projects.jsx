@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react";
 
 export const projects = [
   {
-    title: "Uni Management System",
+    title: "Uni Management",
     url: "https://github.com/RohanSoni-02/UniversityManagementSystem",
     image: "projects/uni.png",
     description: "Use React Three Fiber to create a 3D game",
@@ -46,20 +46,26 @@ export const projects = [
   {
     title: "Shape Drawer",
     url: "https://github.com/RohanSoni-02/ShapeDrawer",
-    image: "projects/music.png",
+    image: "projects/Shape.png",
     description: "Uses Inheritance and Polymorphism to draw different shapes. Each of the shape class has its own custom drawing implmentation",
   },
   {
-    title: "Music Player",
-    url: "https://github.com/RohanSoni-02/Custom-Music-player",
-    image: "projects/music.png",
-    description: "Music player with albums allowing play, pause, shuffle, next and previous song.",
+    title: "Book Reservation",
+    url: "https://github.com/RohanSoni-02/LibraryReservationSystem",
+    image: "projects/lib.png",
+    description: "Web application that tracks the current status of books, if they’re available, reserved or unavailable",
   },
   {
-    title: "Music Player",
-    url: "https://github.com/RohanSoni-02/Custom-Music-player",
-    image: "projects/music.png",
-    description: "Music player with albums allowing play, pause, shuffle, next and previous song.",
+    title: "Conference Venue",
+    url: "https://github.com/RohanSoni-02/ConferenceVenueBooking",
+    image: "projects/conf.png",
+    description: "Web application that allows to book venues based on number of guests",
+  },
+  {
+    title: "IoT Bush Fire",
+    url: "https://github.com/RohanSoni-02/SmartBushFireRiskGaugeSystem",
+    image: "projects/bush.png",
+    description: "System uses various sensors to identify the risk of a bushfire occurring.",
   },
 ];
 
