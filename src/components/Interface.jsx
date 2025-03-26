@@ -5,6 +5,8 @@ import { useAtom } from "jotai";
 import { currentProjectAtom, projects } from "./Projects";
 import emailjs from '@emailjs/browser';
 import { useState } from "react";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
+
 
 const Section = (props) => {
   const { children, mobileTop } = props;
@@ -336,46 +338,25 @@ const ContactSection = () => {
                 ))}
               </div>
             )}
-            <label htmlFor="name" className="font-medium text-gray-900 block mb-1">
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-            />
-            <label
-              htmlFor="email"
-              className="font-medium text-gray-900 block mb-1 mt-8"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-            />
-            <label
-              htmlFor="message"
-              className="font-medium text-gray-900 block mb-1 mt-8"
-            >
-              Message
-            </label>
-            <textarea
-              name="message"
-              id="message"
-              className="h-32 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
-            />
-            <button
-              disabled={state.submitting}
-              className="bg-indigo-600 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 "
-            >
+            <label htmlFor="name" className="font-medium text-gray-900 block mb-1">Name</label>
+            <input type="text" name="name" id="name" className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3" />
+            <label htmlFor="email" className="font-medium text-gray-900 block mb-1 mt-8">Email</label>
+            <input type="email" name="email" id="email" className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3" />
+            <label htmlFor="message" className="font-medium text-gray-900 block mb-1 mt-8">Message</label>
+            <textarea name="message" id="message" className="h-32 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3" />
+            <button disabled={state.submitting} className="bg-indigo-600 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 ">
               {state.submitting ? 'Sending...' : 'Submit'}
             </button>
           </form>
         )}
+      </div>
+      <div className="flex space-x-4 mt-6">
+        <a href="https://www.linkedin.com/in/rohan-soni-389591203/" target="_blank" rel="noopener noreferrer">
+          <FaLinkedin className="w-10 h-10 text-blue-600 hover:text-blue-800 transition" />
+        </a>
+        <a href="https://github.com/RohanSoni-02" target="_blank" rel="noopener noreferrer">
+          <FaGithub className="w-10 h-10 text-gray-800 hover:text-black transition" />
+        </a>
       </div>
     </Section>
   );
