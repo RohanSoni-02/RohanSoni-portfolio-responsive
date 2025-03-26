@@ -14,10 +14,28 @@ export const projects = [
     description: "Use React Three Fiber to create a 3D game",
   },
   {
+    title: "Conference Venue",
+    url: "https://github.com/RohanSoni-02/ConferenceVenueBooking",
+    image: "projects/conf.png",
+    description: "Web application that allows to book venues based on number of guests",
+  },
+  {
     title: "ChatBot App",
     url: "https://github.com/RohanSoni-02/Chat-Bot-Kotlin-app",
     image: "projects/chat.png",
     description: "Use commands to search on the web, launch gallery, play a game, solve basic arithmetic problems, tell a joke, date and time.",
+  },
+  {
+    title: "Music Player",
+    url: "https://github.com/RohanSoni-02/Custom-Music-player",
+    image: "projects/music.png",
+    description: "Music player with albums allowing play, pause, shuffle, next and previous song.",
+  },
+  {
+    title: "Swin Adventure",
+    url: "https://github.com/RohanSoni-02/SwinAdventureGUI",
+    image: "projects/swin.png",
+    description: "Game allows players to exist within a location/room within the world, the player can move between locations using path",
   },
   {
     title: "AquaVision",
@@ -32,40 +50,33 @@ export const projects = [
     description: "A cybernetic snake's journey through a grid-based world, attempting to eat as many apples as possible on the map.",
   },
   {
-    title: "Swin Adventure",
-    url: "https://github.com/RohanSoni-02/SwinAdventureGUI",
-    image: "projects/swin.png",
-    description: "Game allows players to exist within a location/room within the world, the player can move between locations using path",
-  },
-  {
-    title: "Music Player",
-    url: "https://github.com/RohanSoni-02/Custom-Music-player",
-    image: "projects/music.png",
-    description: "Music player with albums allowing play, pause, shuffle, next and previous song.",
-  },
-  {
-    title: "Shape Drawer",
-    url: "https://github.com/RohanSoni-02/ShapeDrawer",
-    image: "projects/Shape.png",
-    description: "Uses Inheritance and Polymorphism to draw different shapes. Each of the shape class has its own custom drawing implmentation",
-  },
-  {
     title: "Book Reservation",
     url: "https://github.com/RohanSoni-02/LibraryReservationSystem",
     image: "projects/lib.png",
     description: "Web application that tracks the current status of books, if they’re available, reserved or unavailable",
   },
   {
-    title: "Conference Venue",
-    url: "https://github.com/RohanSoni-02/ConferenceVenueBooking",
-    image: "projects/conf.png",
-    description: "Web application that allows to book venues based on number of guests",
-  },
-  {
     title: "IoT Bush Fire",
     url: "https://github.com/RohanSoni-02/SmartBushFireRiskGaugeSystem",
     image: "projects/bush.png",
     description: "System uses various sensors to identify the risk of a bushfire occurring.",
+  },
+  {
+    title: "Detective Room",
+    image: "projects/det.png",
+    description: "A detective room 3d model made on Autodesk May",
+  },
+  {
+    title: "UI Prototype",
+    url: "https://xd.adobe.com/view/5e363d7a-389f-430d-bffa-1482b92b70bf-0b65/",
+    image: "projects/pro.png",
+    description: "Working user interface prototype built on Adobe XD for a startup company Quitch",
+  },
+  {
+    title: "Shape Drawer",
+    url: "https://github.com/RohanSoni-02/ShapeDrawer",
+    image: "projects/Shape.png",
+    description: "Uses Inheritance and Polymorphism to draw different shapes. Each of the shape class has its own custom drawing implmentation",
   },
 ];
 
