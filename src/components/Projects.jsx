@@ -8,34 +8,58 @@ import { useEffect, useRef } from "react";
 
 export const projects = [
   {
-    title: "Wawatmos",
-    url: "https://r3f-wawatmos-final.vercel.app/",
-    image: "projects/wawatmos.jpg",
-    description: "Recreating the Atmos Awwwards website with React Three Fiber",
-  },
-  {
-    title: "Portfolio Baking",
-    url: "https://www.youtube.com/watch?v=YkHqpqJgLKw",
-    image: "projects/baking.jpg",
-    description: "Learn how to bake a 3D model with Blender and use it in r3f",
-  },
-  {
-    title: "3D Avatar",
-    url: "https://www.youtube.com/watch?v=pGMKIyALcK0",
-    image: "projects/avatar.jpg",
-    description: "Learn how to use ReadyPlayerMe to create a 3D avatar",
-  },
-  {
-    title: "Kanagame",
-    url: "https://www.youtube.com/watch?v=zwNF1-lsia8",
-    image: "projects/kanagame.jpg",
+    title: "Uni Management System",
+    url: "https://github.com/RohanSoni-02/UniversityManagementSystem",
+    image: "projects/uni.png",
     description: "Use React Three Fiber to create a 3D game",
   },
   {
-    title: "Loader",
-    url: "https://www.youtube.com/watch?v=L12wIvuZTOY",
-    image: "projects/loader.jpg",
-    description: "Create a loading screen for your r3f projects",
+    title: "ChatBot App",
+    url: "https://github.com/RohanSoni-02/Chat-Bot-Kotlin-app",
+    image: "projects/chat.png",
+    description: "Use commands to search on the web, launch gallery, play a game, solve basic arithmetic problems, tell a joke, date and time.",
+  },
+  {
+    title: "AquaVision",
+    url: "https://github.com/RohanSoni-02/fish-detection-and-tracking",
+    image: "projects/aqua.png",
+    description: "Analyze videos with statistical insights using a machine-learning model for fish detection and tracking",
+  },
+  {
+    title: "CyberPython",
+    url: "https://github.com/RohanSoni-02/CyberPython",
+    image: "projects/snake.png",
+    description: "A cybernetic snake's journey through a grid-based world, attempting to eat as many apples as possible on the map.",
+  },
+  {
+    title: "Swin Adventure",
+    url: "https://github.com/RohanSoni-02/SwinAdventureGUI",
+    image: "projects/swin.png",
+    description: "Game allows players to exist within a location/room within the world, the player can move between locations using path",
+  },
+  {
+    title: "Music Player",
+    url: "https://github.com/RohanSoni-02/Custom-Music-player",
+    image: "projects/music.png",
+    description: "Music player with albums allowing play, pause, shuffle, next and previous song.",
+  },
+  {
+    title: "Shape Drawer",
+    url: "https://github.com/RohanSoni-02/ShapeDrawer",
+    image: "projects/music.png",
+    description: "Uses Inheritance and Polymorphism to draw different shapes. Each of the shape class has its own custom drawing implmentation",
+  },
+  {
+    title: "Music Player",
+    url: "https://github.com/RohanSoni-02/Custom-Music-player",
+    image: "projects/music.png",
+    description: "Music player with albums allowing play, pause, shuffle, next and previous song.",
+  },
+  {
+    title: "Music Player",
+    url: "https://github.com/RohanSoni-02/Custom-Music-player",
+    image: "projects/music.png",
+    description: "Music player with albums allowing play, pause, shuffle, next and previous song.",
   },
 ];
 
@@ -73,7 +97,7 @@ const Project = (props) => {
         maxWidth={2}
         anchorX={"left"}
         anchorY={"top"}
-        fontSize={0.2}
+        fontSize={0.16}
         position={[-1, -0.4, 0]}
       >
         {project.title.toUpperCase()}
