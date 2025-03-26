@@ -63,6 +63,7 @@ export const projects = [
   },
   {
     title: "Detective Room",
+    url: "https://www.linkedin.com/in/rohan-soni-389591203/details/projects/",
     image: "projects/det.png",
     description: "A detective room 3d model made on Autodesk May",
   },

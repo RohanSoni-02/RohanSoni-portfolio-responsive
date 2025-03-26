@@ -106,11 +106,15 @@ const skills = [
   },
   {
     title: "C#",
-    level: 70,
+    level: 75,
   },
   {
     title: "Python",
     level: 80,
+  },
+  {
+    title: "JavaScript",
+    level: 70,
   },
   {
     title: "Kotlin",
@@ -121,10 +125,6 @@ const languages = [
   {
     title: "HTML & CSS",
     level: 85,
-  },
-  {
-    title: "JavaScript",
-    level: 70,
   },
   {
     title: "React.js",
