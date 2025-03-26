@@ -275,12 +275,11 @@ const ContactSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Get form values
     const name = e.target.name.value;
     const email = e.target.email.value;
     const message = e.target.message.value;
 
-    // Validate inputs
+    
     if (!name || !email || !message) {
       setState(prev => ({
         ...prev, 
@@ -289,30 +288,30 @@ const ContactSection = () => {
       return;
     }
 
-    // Set submitting state
+    
     setState(prev => ({ ...prev, submitting: true }));
 
     try {
-      // Send email using EmailJS
+      
       const result = await emailjs.send(
-        'service_xchakhk',    // Replace with your EmailJS service ID
-        'template_3sm0n4h',   // Replace with your EmailJS template ID
+        'service_xchakhk',    
+        'template_3sm0n4h',   
         {
           from_name: name,
           from_email: email,
           message: message
         },
-        'eCqPlqXBogDOH93Fb'     // Replace with your EmailJS public key
+        'eCqPlqXBogDOH93Fb'     
       );
 
-      // Handle successful submission
+      
       setState({
         submitting: false,
         succeeded: true,
         errors: []
       });
     } catch (error) {
-      // Handle submission error
+      
       setState(prev => ({
         ...prev,
         submitting: false,
