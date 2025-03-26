@@ -11,7 +11,7 @@ export const projects = [
     title: "Uni Management",
     url: "https://github.com/RohanSoni-02/UniversityManagementSystem",
     image: "projects/uni.png",
-    description: "Use React Three Fiber to create a 3D game",
+    description: "Secure and scalable software application designed to manage the administra-tive, academic, and personal data of teachers and students",
   },
   {
     title: "Conference Venue",
