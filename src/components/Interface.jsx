@@ -1,7 +1,10 @@
-import { ValidationError, useForm } from "@formspree/react";
+/*import { ValidationError, useForm } from "@formspree/react";
+*/
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { currentProjectAtom, projects } from "./Projects";
+import emailjs from '@emailjs/browser';
+import { useState } from "react";
 
 const Section = (props) => {
   const { children, mobileTop } = props;
@@ -263,16 +266,78 @@ const ProjectsSection = () => {
 };
 
 const ContactSection = () => {
-  const [state, handleSubmit] = useForm("mayzgjbd");
+  const [state, setState] = useState({
+    submitting: false,
+    succeeded: false,
+    errors: []
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Get form values
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const message = e.target.message.value;
+
+    // Validate inputs
+    if (!name || !email || !message) {
+      setState(prev => ({
+        ...prev, 
+        errors: ['Please fill in all fields']
+      }));
+      return;
+    }
+
+    // Set submitting state
+    setState(prev => ({ ...prev, submitting: true }));
+
+    try {
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        'service_xchakhk',    // Replace with your EmailJS service ID
+        'template_3sm0n4h',   // Replace with your EmailJS template ID
+        {
+          from_name: name,
+          from_email: email,
+          message: message
+        },
+        'eCqPlqXBogDOH93Fb'     // Replace with your EmailJS public key
+      );
+
+      // Handle successful submission
+      setState({
+        submitting: false,
+        succeeded: true,
+        errors: []
+      });
+    } catch (error) {
+      // Handle submission error
+      setState(prev => ({
+        ...prev,
+        submitting: false,
+        errors: ['Failed to send message. Please try again.']
+      }));
+      console.error('Email send error:', error);
+    }
+  };
+
   return (
     <Section>
       <h2 className="text-3xl md:text-5xl font-bold">Contact me</h2>
       <div className="mt-8 p-8 rounded-md bg-white bg-opacity-50 w-96 max-w-full">
         {state.succeeded ? (
-          <p className="text-gray-900 text-center">Thanks for your message !</p>
+          <p className="text-gray-900 text-center">Thanks for your message!</p>
         ) : (
           <form onSubmit={handleSubmit}>
-            <label for="name" className="font-medium text-gray-900 block mb-1">
+            {state.errors.length > 0 && (
+              <div className="text-red-500 mb-4">
+                {state.errors.map((error, index) => (
+                  <p key={index}>{error}</p>
+                ))}
+              </div>
+            )}
+            <label htmlFor="name" className="font-medium text-gray-900 block mb-1">
               Name
             </label>
             <input
@@ -282,7 +347,7 @@ const ContactSection = () => {
               className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
             />
             <label
-              for="email"
+              htmlFor="email"
               className="font-medium text-gray-900 block mb-1 mt-8"
             >
               Email
@@ -293,14 +358,8 @@ const ContactSection = () => {
               id="email"
               className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
             />
-            <ValidationError
-              className="mt-1 text-red-500"
-              prefix="Email"
-              field="email"
-              errors={state.errors}
-            />
             <label
-              for="email"
+              htmlFor="message"
               className="font-medium text-gray-900 block mb-1 mt-8"
             >
               Message
@@ -310,15 +369,11 @@ const ContactSection = () => {
               id="message"
               className="h-32 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
             />
-            <ValidationError
-              className="mt-1 text-red-500"
-              errors={state.errors}
-            />
             <button
               disabled={state.submitting}
               className="bg-indigo-600 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 "
             >
-              Submit
+              {state.submitting ? 'Sending...' : 'Submit'}
             </button>
           </form>
         )}
