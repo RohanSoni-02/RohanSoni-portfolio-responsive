@@ -32,6 +32,14 @@ export const Menu = (props) => {
           <MenuButton label="Skills" onClick={() => onSectionChange(1)} />
           <MenuButton label="Projects" onClick={() => onSectionChange(2)} />
           <MenuButton label="Contact" onClick={() => onSectionChange(3)} />
+          <a 
+          href="/resume.pdf" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-2xl font-bold cursor-pointer hover:text-indigo-600 transition-colors"
+          >
+            View Resume
+          </a>
         </div>
       </div>
     </>

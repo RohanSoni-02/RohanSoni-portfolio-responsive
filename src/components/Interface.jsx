@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { currentProjectAtom, projects } from "./Projects";
 import emailjs from '@emailjs/browser';
 import { useState } from "react";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
 
 const Section = (props) => {
@@ -356,6 +356,9 @@ const ContactSection = () => {
         </a>
         <a href="https://github.com/RohanSoni-02" target="_blank" rel="noopener noreferrer">
           <FaGithub className="w-10 h-10 text-gray-800 hover:text-black transition" />
+        </a>
+        <a href="mailto:soni.rohanchd@gmail.com">
+          <FaEnvelope className="w-10 h-10 text-red-600 hover:text-red-800 transition" />
         </a>
       </div>
     </Section>
