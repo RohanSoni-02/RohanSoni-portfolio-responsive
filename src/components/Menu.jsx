@@ -33,7 +33,7 @@ export const Menu = (props) => {
         <div className="flex-1 flex items-start justify-center flex-col gap-6 p-8">
         <div className="flex justify-center w-full mb-2 flex-col items-center">
           <img 
-              src="./src/assets/logo.png" 
+              src="/logo.png" 
               alt="Logo" 
               className="w-24 h-24 mb-1" 
           />
