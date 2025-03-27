@@ -46,7 +46,7 @@ export const Menu = (props) => {
           rel="noopener noreferrer"
           className="text-2xl font-bold cursor-pointer hover:text-indigo-600 transition-colors"
           >
-            View Resume
+            Resume
           </a>
         </div>
       </div>
