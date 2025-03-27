@@ -1,5 +1,3 @@
-/*import { ValidationError, useForm } from "@formspree/react";
-*/
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { currentProjectAtom, projects } from "./Projects";
@@ -110,26 +108,30 @@ const skills = [
   },
   {
     title: "Python",
-    level: 80,
+    level: 85,
   },
   {
     title: "JavaScript",
-    level: 70,
+    level: 75,
   },
   {
     title: "Kotlin",
     level: 50,
   },
   {
-    title: "HTML & CSS",
-    level: 85,
+    title: "AWS Cloud",
+    level: 75,
   },
   {
-    title: "React.js",
+    title: "React.js / React Three Fiber",
     level: 60,
   },
   {
-    title: "Three.js",
+    title: "MySQL",
+    level: 85,
+  },
+  {
+    title: "MongoDB",
     level: 60,
   },
 ];
