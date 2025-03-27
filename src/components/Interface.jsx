@@ -103,12 +103,12 @@ const skills = [
     level: 90,
   },
   {
-    title: "C#",
-    level: 75,
-  },
-  {
     title: "Python",
     level: 85,
+  },
+  {
+    title: "C#",
+    level: 75,
   },
   {
     title: "JavaScript",
@@ -123,7 +123,7 @@ const skills = [
     level: 75,
   },
   {
-    title: "React.js / React Three Fiber",
+    title: "React.js",
     level: 60,
   },
   {
