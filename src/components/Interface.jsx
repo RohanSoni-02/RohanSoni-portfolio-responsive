@@ -140,7 +140,7 @@ const SkillsSection = () => {
   return (
     <Section>
       <motion.div className="w-full" whileInView={"visible"}>
-        <h2 className="text-3xl md:text-5xl font-bold text-white">Skills</h2>
+        <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight md:tracking-normal font-serif text-white">Skills</h2>
         <div className="mt-8 space-y-4">
           {skills.map((skill, index) => (
             <div className="w-full md:w-64" key={index}>
@@ -203,14 +203,17 @@ const ProjectsSection = () => {
     <Section>
       <div className="flex w-full h-full gap-8 items-center justify-center">
         <button
-          className="hover:text-indigo-600 transition-colors"
+          className="hover:text-white transition-colors"
           onClick={previousProject}
         >
           ← Previous
         </button>
-        <h2 className="text-3xl md:text-5xl font-bold">Projects</h2>
+        <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight md:tracking-normal font-serif">
+  Projects
+</h2>
+
         <button
-          className="hover:text-indigo-600 transition-colors"
+          className="hover:text-white transition-colors"
           onClick={nextProject}
         >
           Next →
@@ -278,7 +281,7 @@ const ContactSection = () => {
 
   return (
     <Section>
-      <h2 className="text-3xl md:text-5xl font-bold">Contact me</h2>
+      <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight md:tracking-normal font-serif">Get in Touch</h2>
       <div className="mt-8 p-8 rounded-md bg-white bg-opacity-50 w-96 max-w-full">
         {state.succeeded ? (
           <p className="text-gray-900 text-center">Thanks for your message!</p>
@@ -303,7 +306,7 @@ const ContactSection = () => {
           </form>
         )}
       </div>
-      <div className="flex space-x-4 mt-6">
+      <div className="flex space-x-4 mt-4">
         <a href="https://www.linkedin.com/in/rohan-soni-389591203/" target="_blank" rel="noopener noreferrer">
           <FaLinkedin className="w-10 h-10 text-blue-600 hover:text-blue-800 transition" />
         </a>

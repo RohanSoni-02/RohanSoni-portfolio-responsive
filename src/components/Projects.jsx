@@ -11,7 +11,7 @@ export const projects = [
     title: "Uni Management",
     url: "https://github.com/RohanSoni-02/UniversityManagementSystem",
     image: "projects/uni.png",
-    description: "Secure and scalable software application designed to manage the administra-tive, academic, and personal data of teachers and students",
+    description: "Secure and scalable software application designed to manage the administrative, academic, and personal data of teachers and students",
   },
   {
     title: "Conference Venue",
@@ -38,22 +38,22 @@ export const projects = [
     description: "Game allows players to exist within a location/room within the world, the player can move between locations using path",
   },
   {
-    title: "AquaVision",
-    url: "https://github.com/RohanSoni-02/fish-detection-and-tracking",
-    image: "projects/aqua.png",
-    description: "Analyze videos with statistical insights using a machine-learning model for fish detection and tracking",
-  },
-  {
     title: "CyberPython",
     url: "https://github.com/RohanSoni-02/CyberPython",
     image: "projects/snake.png",
     description: "A cybernetic snake's journey through a grid-based world, attempting to eat as many apples as possible on the map.",
   },
   {
+    title: "AquaVision",
+    url: "https://github.com/RohanSoni-02/fish-detection-and-tracking",
+    image: "projects/aqua.png",
+    description: "Analyze videos with statistical insights using a machine-learning model for fish detection and tracking",
+  },
+  {
     title: "Book Reservation",
     url: "https://github.com/RohanSoni-02/LibraryReservationSystem",
     image: "projects/lib.png",
-    description: "Web application that tracks the current status of books, if they’re available, reserved or unavailable",
+    description: "Web application that tracks the current status of books, if they are available, reserved or unavailable",
   },
   {
     title: "IoT Bush Fire",
@@ -65,7 +65,7 @@ export const projects = [
     title: "Detective Room",
     url: "https://www.linkedin.com/in/rohan-soni-389591203/details/projects/",
     image: "projects/det.png",
-    description: "A detective room 3d model made on Autodesk May",
+    description: "A detective room 3d model made on Autodesk Maya",
   },
   {
     title: "UI Prototype",
@@ -77,7 +77,7 @@ export const projects = [
     title: "Shape Drawer",
     url: "https://github.com/RohanSoni-02/ShapeDrawer",
     image: "projects/Shape.png",
-    description: "Uses Inheritance and Polymorphism to draw different shapes. Each of the shape class has its own custom drawing implmentation",
+    description: "Uses Inheritance and Polymorphism to draw different shapes. Each of the shape class has its own custom drawing implementation",
   },
 ];
 
