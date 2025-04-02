@@ -132,6 +132,10 @@ const skills = [
     level: 85,
   },
   {
+    title: "MongoDB",
+    level: 75,
+  },
+  {
     title: "AWS Cloud",
     level: 85,
   },
