@@ -40,6 +40,7 @@ export const Interface = (props) => {
     <div className="flex flex-col items-center w-screen">
       <AboutSection setSection={setSection} />
       <SkillsSection />
+      <WorkExperienceSection />
       <ProjectsSection />
       <ContactSection />
     </div>
@@ -56,7 +57,7 @@ const AboutSection = (props) => {
         <span className="bg-white px-1 italic">Rohan Soni</span>
       </h1>
       <motion.p
-        className="text-lg text-gray-600 mt-4"
+        className="text-lg text-black-600 mt-4"
         initial={{
           opacity: 0,
           y: 25,
@@ -75,7 +76,7 @@ const AboutSection = (props) => {
         Let's connect and build something great!
       </motion.p>
       <motion.button
-        onClick={() => setSection(3)}
+        onClick={() => setSection(4)}
         className={`bg-indigo-600 text-white py-4 px-8 
       rounded-lg font-bold text-lg mt-4 md:mt-16`}
         initial={{
@@ -104,11 +105,11 @@ const skills = [
   },
   {
     title: "Python",
-    level: 85,
+    level: 83,
   },
   {
     title: "C#",
-    level: 75,
+    level: 85,
   },
   {
     title: "JavaScript",
@@ -116,15 +117,15 @@ const skills = [
   },
   {
     title: "Kotlin",
-    level: 50,
-  },
-  {
-    title: "AWS Cloud",
-    level: 75,
+    level: 70,
   },
   {
     title: "React.js",
-    level: 60,
+    level: 75,
+  },
+  {
+    title: "Three.js / R3F",
+    level: 70,
   },
   {
     title: "MySQL",
@@ -132,7 +133,11 @@ const skills = [
   },
   {
     title: "MongoDB",
-    level: 60,
+    level: 70,
+  },
+  {
+    title: "AWS Cloud",
+    level: 85,
   },
 ];
 
@@ -181,6 +186,80 @@ const SkillsSection = () => {
                 />
               </div>
             </div>
+          ))}
+        </div>
+      </motion.div>
+    </Section>
+  );
+};
+
+const workExperiences = [
+  {
+    role: "Junior Software Developer",
+    company: "Smart Ping AI",
+    period: "March 2024 - Jan 2025",
+    description: "Leveraged the Panoramisk library in Python to interface with AMI, enabling real-time management of PBX operations, including channel monitoring, call origination, call handling, and extension management."
+  },
+  {
+    role: "ChatGPT Developer Intern",
+    company: "AML Cloud",
+    period: "Feb 2023 - May 2023",
+    description: "Assisted in the development of AML software, using Python and text-davinci-003 GPT model to perform name matching and sanction screening."
+  },
+  {
+    role: "Mobile Application Developer Intern",
+    company: "Doodel Pty Ltd",
+    period: "Aug 2022 - Nov 2022",
+    description: "Conceptualised and developed a mobile application using React Native and integrated Shopify storefront API into the mobile app."
+  },
+  {
+    role: "Software Developer Intern",
+    company: "Quadrant Televentures Limited",
+    period: "Nov 2021 - Dec 2021",
+    description: "Assisted in the development of IVR, implemented voice recognition and text-to-speech conversion features."
+  },
+];
+
+const WorkExperienceSection = () => {
+  return (
+    <Section>
+      <motion.div className="w-full md:pt-0 pt-16">
+        <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight md:tracking-normal font-serif text-white">
+          Work Experience
+        </h2>
+        <div className="mt-6 space-y-6">
+          {workExperiences.map((experience, index) => (
+            <motion.div
+              key={index}
+              className="bg-white bg-opacity-20 p-4 md:p-6 rounded-lg backdrop-blur-sm"
+              initial={{ 
+                opacity: 0, 
+                y: 50 
+              }}
+              whileInView={{ 
+                opacity: 1, 
+                y: 0 
+              }}
+              exit={{ 
+                opacity: 0, 
+                y: -50 
+              }}
+              transition={{ 
+                duration: 1, 
+                delay: 0.8 + index * 0.08 // Reduced delay for smoother animation
+              }}
+              viewport={{ 
+                once: false, // Allows animation to trigger multiple times
+                amount: 0.3 // Triggers when 30% of element is in view
+              }}
+            >
+              <h3 className="text-lg md:text-xl font-bold text-white">{experience.role}</h3>
+              <div className="flex justify-between items-center mt-2">
+                <span className="text-sm md:text-base text-indigo-200 font-medium">{experience.company}</span>
+                <span className="text-xs md:text-sm text-gray-300">{experience.period}</span>
+              </div>
+              <p className="mt-3 text-sm md:text-base text-gray-200">{experience.description}</p>
+            </motion.div>
           ))}
         </div>
       </motion.div>

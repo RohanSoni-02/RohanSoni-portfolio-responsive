@@ -43,8 +43,9 @@ export const Menu = (props) => {
         </div>
           <MenuButton label="About" onClick={() => onSectionChange(0)} />
           <MenuButton label="Skills" onClick={() => onSectionChange(1)} />
-          <MenuButton label="Projects" onClick={() => onSectionChange(2)} />
-          <MenuButton label="Contact" onClick={() => onSectionChange(3)} />
+          <MenuButton label="Experience" onClick={() => onSectionChange(2)} />
+          <MenuButton label="Projects" onClick={() => onSectionChange(3)} />
+          <MenuButton label="Contact" onClick={() => onSectionChange(4)} />
           <a 
           href="/resume.pdf" 
           target="_blank" 

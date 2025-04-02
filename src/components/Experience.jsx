@@ -52,8 +52,8 @@ export const Experience = (props) => {
   useFrame((state) => {
     let curSection = Math.floor(data.scroll.current * data.pages);
 
-    if (curSection > 3) {
-      curSection = 3;
+    if (curSection > 4) {
+      curSection = 4;
     }
 
     if (curSection !== section) {
@@ -107,9 +107,20 @@ export const Experience = (props) => {
             scaleY: isMobile ? 1.5 : 1,
             scaleZ: isMobile ? 1.5 : 1,
           },
-          2: {
-            x: isMobile ? -1.4 : -2,
+          2: { 
             y: -viewport.height * 2 + 0.5,
+            x: isMobile ? 0 : 1,
+            z: 5,
+            rotateX: 0,
+            rotateY: isMobile ? -Math.PI / 4 : 0,
+            rotateZ: 0,
+            scaleX: 1,
+            scaleY: 1,
+            scaleZ: 1,
+          },
+          3: {
+            x: isMobile ? -1.4 : -2,
+            y: -viewport.height * 3 + 0.5,
             z: 0,
             rotateX: 0,
             rotateY: Math.PI / 2,
@@ -118,8 +129,8 @@ export const Experience = (props) => {
             scaleY: 1,
             scaleZ: 1,
           },
-          3: {
-            y: -viewport.height * 3 + 1,
+          4: { 
+            y: -viewport.height * 4 + 1,
             x: 0.24,
             z: 8.5,
             rotateX: 0,
@@ -131,7 +142,7 @@ export const Experience = (props) => {
           },
         }}
       >
-        <Avatar animation={characterAnimation} wireframe={section === 1} />
+        <Avatar animation={characterAnimation} wireframe={section === 1} visible = {section != 2}/>
       </motion.group>
       <ambientLight intensity={1} />
       <motion.group
@@ -169,7 +180,7 @@ export const Experience = (props) => {
           z: section === 1 ? 0 : -10,
           y:
             section === 1
-              ? -viewport.height
+              ? -viewport.height * 2
               : isMobile
               ? -viewport.height
               : -1.5 * officeScaleRatio,
