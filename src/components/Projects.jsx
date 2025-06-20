@@ -50,6 +50,12 @@ export const projects = [
     description: "Analyze videos with statistical insights using a machine-learning model for fish detection and tracking",
   },
   {
+    title: "Personal AI ChatBot",
+    url: "https://github.com/RohanSoni-02/CareerConvo",
+    image: "projects/bot.svg",
+    description: "AI-powered personal assistant designed to represent me"
+  },
+  {
     title: "Book Reservation",
     url: "https://github.com/RohanSoni-02/LibraryReservationSystem",
     image: "projects/lib.png",
