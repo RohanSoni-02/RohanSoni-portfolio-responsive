@@ -55,6 +55,18 @@ export const projects = [
     image: "projects/bush.png",
     description: "System uses various sensors to identify the risk of a bushfire occurring.",
   },
+  {
+    title: "Tic Tac Toe",
+    url: "https://github.com/RohanSoni-02/TicTacToe",
+    image: "projects/tic.png",
+    description: "Console based Tic Tac Toe game that allows a human player to play against a basic AI that makes random moves.",
+  },
+  {
+    title: "Hunter Prey",
+    url: "https://github.com/RohanSoni-02/HunterPrey",
+    image: "projects/hunt.png",
+    description: "Game that simulates group behavior through emergent principles, where simple individual rules lead to complex group dynamics",
+  },
    {
     title: "CyberPython",
     url: "https://github.com/RohanSoni-02/CyberPython",
