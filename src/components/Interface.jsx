@@ -1,4 +1,4 @@
-import { MotionConfig, motion, useInView } from "framer-motion";
+import { MotionConfig, motion, useInView, useReducedMotion } from "framer-motion";
 import { useAtom } from "jotai";
 import {
   currentProjectAtom,
@@ -55,41 +55,140 @@ export const Interface = (props) => {
   );
 };
 
+const MORSE = {
+  a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".", f: "..-.", g: "--.", h: "....",
+  i: "..", j: ".---", k: "-.-", l: ".-..", m: "--", n: "-.", o: "---", p: ".--.",
+  q: "--.-", r: ".-.", s: "...", t: "-", u: "..-", v: "...-", w: ".--", x: "-..-",
+  y: "-.--", z: "--..",
+};
+
+const HERO_NAME = "Rohan Soni";
+const HERO_TAGLINE = "Software engineer from Melbourne, working across GenAI and DevOps.";
+const DECODE_START = 0.9;
+const LETTER_STEP = 0.1;
+const SYMBOL_STEP = 0.05;
+const TYPING_START_MS = 1900;
+const TYPING_SPEED_MS = 24;
+
+const MorseName = ({ name, play }) => {
+  const reduceMotion = useReducedMotion();
+  let letterIndex = 0;
+
+  return (
+    <span aria-hidden="true" title={`${name} in Morse code`} className="flex flex-wrap items-start">
+      {name.split("").map((char, i) => {
+        if (char === " ") {
+          return <span key={i} className="w-[0.28em]" />;
+        }
+        const code = MORSE[char.toLowerCase()] ?? "";
+        const start = DECODE_START + letterIndex++ * LETTER_STEP;
+        return (
+          <span key={i} className="inline-flex flex-col items-center">
+            <motion.span
+              initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+              animate={play || reduceMotion ? { opacity: 1, y: 0 } : undefined}
+              transition={{
+                duration: 0.35,
+                delay: start + code.length * SYMBOL_STEP,
+                ease: "easeOut",
+              }}
+            >
+              {char}
+            </motion.span>
+            <span className="mt-1.5 md:mt-2 flex gap-[2px] md:gap-[3px]">
+              {code.split("").map((symbol, j) => (
+                <motion.span
+                  key={j}
+                  className={`h-[3px] md:h-1 rounded-full bg-indigo-500 ${
+                    symbol === "." ? "w-[3px] md:w-1" : "w-1.5 md:w-2.5"
+                  }`}
+                  initial={reduceMotion ? false : { opacity: 0.15 }}
+                  animate={
+                    reduceMotion ? { opacity: 0.6 } : play ? { opacity: [0.15, 1, 0.6] } : undefined
+                  }
+                  transition={{ duration: 0.5, delay: start + j * SYMBOL_STEP, times: [0, 0.3, 1] }}
+                />
+              ))}
+            </span>
+          </span>
+        );
+      })}
+    </span>
+  );
+};
+
+const TypedLine = ({ text, play, onDone, className }) => {
+  const reduceMotion = useReducedMotion();
+  const [count, setCount] = useState(reduceMotion ? text.length : 0);
+  const done = count >= text.length;
+
+  useEffect(() => {
+    if (!play || done) return;
+    const timeout = setTimeout(
+      () => setCount((current) => current + 1),
+      count === 0 ? TYPING_START_MS : TYPING_SPEED_MS
+    );
+    return () => clearTimeout(timeout);
+  }, [play, count, done]);
+
+  useEffect(() => {
+    if (done) onDone();
+  }, [done]);
+
+  return (
+    <p className={`relative ${className}`}>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true" className="invisible">{text}</span>
+      <span aria-hidden="true" className="absolute inset-0">
+        {text.slice(0, count)}
+        <span
+          className={`ml-0.5 inline-block h-[1.05em] w-[2px] translate-y-[0.18em] bg-indigo-600 motion-reduce:hidden ${
+            done ? "animate-caret-blink" : ""
+          }`}
+        />
+      </span>
+    </p>
+  );
+};
+
 const AboutSection = (props) => {
   const { setSection } = props;
+  const introRef = useRef();
+  const play = useInView(introRef, { once: true });
+  const [taglineDone, setTaglineDone] = useState(false);
+
   return (
     <Section mobileTop>
-      <h1 className="mt-8 md:mt-0 font-serif text-indigo-950">
-        <span className="block text-2xl md:text-3xl text-gray-700">Hi, I'm</span>
-        <span className="mt-1 md:mt-2 block text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight">
-          <span className="md:block">Rohan</span> <span className="md:block">Soni</span>
-        </span>
-      </h1>
+      <div ref={introRef}>
+        <h1 className="mt-8 md:mt-0">
+          <span className="sr-only">Hi, I'm {HERO_NAME}</span>
+          <span aria-hidden="true" className="block text-xl md:text-2xl font-semibold text-gray-600">
+            Hi, I'm
+          </span>
+          <span className="mt-1 md:mt-2 block font-serif text-4xl md:text-6xl leading-tight text-indigo-950">
+            <MorseName name={HERO_NAME} play={play} />
+          </span>
+        </h1>
+        <div className="mt-5 md:mt-7 max-w-[20rem] md:max-w-[22rem]">
+          <TypedLine
+            text={HERO_TAGLINE}
+            play={play}
+            onDone={() => setTaglineDone(true)}
+            className="text-lg md:text-xl font-medium leading-snug text-gray-900"
+          />
+          <motion.p
+            className="mt-3 text-[15px] md:text-lg leading-relaxed text-gray-700"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: taglineDone ? 1 : 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Currently working at the University of Melbourne. Let's connect and build
+            something great!
+          </motion.p>
+        </div>
+      </div>
       <motion.div
-        className="mt-5 md:mt-7 max-w-[20rem] md:max-w-[22rem]"
-        initial={{
-          opacity: 0,
-          y: 25,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{
-          duration: 1,
-          delay: 1.5,
-        }}
-      >
-        <p className="text-xl md:text-2xl font-medium leading-snug text-gray-900">
-          Software engineer from Melbourne, working across GenAI and DevOps.
-        </p>
-        <p className="mt-3 text-base md:text-lg leading-relaxed text-gray-700">
-          Currently at the University of Melbourne. Let's connect and build
-          something great!
-        </p>
-      </motion.div>
-      <motion.div
-        className="flex flex-wrap gap-3 mt-7 md:mt-10"
+        className="flex flex-wrap gap-3 mt-6 md:mt-10"
         initial={{
           opacity: 0,
           y: 25,
@@ -584,7 +683,7 @@ const WorkExperienceSection = () => {
       <div className="w-full">
         <h2 className="text-3xl md:text-5xl font-serif text-white">Work Experience</h2>
         <p className="mt-2 md:mt-3 max-w-xl text-sm md:text-lg text-white/60">
-          From IVR phone systems in 2021 to LLM apps and DevOps today.
+          From Game Testing to GenAI apps and DevOps today.
         </p>
         <div className="mt-5 md:mt-10 grid items-start gap-5 lg:gap-16 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
           <div>

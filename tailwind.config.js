@@ -8,6 +8,15 @@ export default {
         sans: ["Figtree Variable", "ui-sans-serif", "system-ui", "sans-serif"],
         serif: ["Young Serif", "Georgia", "serif"],
       },
+      keyframes: {
+        "caret-blink": {
+          "0%, 49%": { opacity: "1" },
+          "50%, 100%": { opacity: "0" },
+        },
+      },
+      animation: {
+        "caret-blink": "caret-blink 1s linear 4 forwards",
+      },
       opacity: {
         15: "0.15",
         35: "0.35",
