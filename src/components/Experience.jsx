@@ -142,7 +142,13 @@ export const Experience = (props) => {
           },
         }}
       >
-        <Avatar animation={characterAnimation} wireframe={section === 1} visible = {section != 2}/>
+        <Avatar
+          animation={characterAnimation}
+          wireframe={section === 1}
+          visible={section != 2}
+          lookAtCursor={!isMobile && [1, 3, 4].includes(section)}
+          showSkillAnchors={section === 1}
+        />
       </motion.group>
       <ambientLight intensity={1} />
       <motion.group

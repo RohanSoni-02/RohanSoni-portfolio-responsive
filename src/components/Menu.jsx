@@ -1,5 +1,5 @@
-import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
-import { SiLeetcode } from "react-icons/si";
+import { SocialLinks } from "./SocialLinks";
+
 export const Menu = (props) => {
   const { onSectionChange, menuOpened, setMenuOpened } = props;
 
@@ -7,6 +7,8 @@ export const Menu = (props) => {
     <>
       <button
         onClick={() => setMenuOpened(!menuOpened)}
+        aria-label={menuOpened ? "Close menu" : "Open menu"}
+        aria-expanded={menuOpened}
         className="z-20 fixed top-4 right-4 md:top-12 md:right-12 p-3 bg-indigo-600 w-11 h-11 rounded-md"
       >
         <div
@@ -54,20 +56,7 @@ export const Menu = (props) => {
           >
             Resume
           </a>
-          <div className="flex space-x-4 mt-6">
-            <a href="https://www.linkedin.com/in/rohan-soni-389591203/" target="_blank" rel="noopener noreferrer">
-              <FaLinkedin className="w-10 h-10 text-blue-600 hover:text-blue-800 transition" />
-            </a>
-            <a href="https://github.com/RohanSoni-02" target="_blank" rel="noopener noreferrer">
-              <FaGithub className="w-10 h-10 text-gray-800 hover:text-black transition" />
-            </a>
-            <a href="mailto:soni.rohanchd@gmail.com">
-              <FaEnvelope className="w-10 h-10 text-red-600 hover:text-red-800 transition" />
-            </a>
-            <a href="https://leetcode.com/RohanS02/">
-              <SiLeetcode className="w-10 h-10 text-red-600 hover:text-red-800 transition" />
-            </a>
-          </div>
+          <SocialLinks className="mt-6 -ml-2" />
         </div>
       </div>
     </>

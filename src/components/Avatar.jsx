@@ -3,14 +3,75 @@ import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { skillAnchors } from "./skillAnchors";
+
+const MAX_HEAD_TURN = 0.7;
+const cursorTarget = new THREE.Vector3();
+const animatedHeadQuaternion = new THREE.Quaternion();
+const lookHeadQuaternion = new THREE.Quaternion();
+
+const anchorCenter = new THREE.Vector3();
+const anchorOffset = new THREE.Vector3();
+const anchorA = new THREE.Vector3();
+const anchorB = new THREE.Vector3();
+const projected = new THREE.Vector3();
+
+const toScreen = (point, camera, size) => {
+  projected.copy(point).project(camera);
+  return {
+    x: ((projected.x + 1) / 2) * size.width,
+    y: ((1 - projected.y) / 2) * size.height,
+  };
+};
+
+const sortByScreenX = (a, b, camera, size) => {
+  const first = toScreen(a, camera, size);
+  const second = toScreen(b, camera, size);
+  return first.x < second.x ? [first, second] : [second, first];
+};
+
+const updateSkillAnchors = (nodes, camera, size) => {
+  const points = skillAnchors.points;
+
+  nodes.Head.getWorldPosition(anchorCenter);
+  nodes.HeadTop_End.getWorldPosition(anchorA);
+  anchorCenter.lerp(anchorA, 0.45);
+  nodes.LeftEye.getWorldPosition(anchorA);
+  nodes.RightEye.getWorldPosition(anchorB);
+  anchorOffset.subVectors(anchorA, anchorB).multiplyScalar(1.6);
+  anchorA.copy(anchorCenter).add(anchorOffset);
+  anchorB.copy(anchorCenter).sub(anchorOffset);
+  [points.headLeft, points.headRight] = sortByScreenX(anchorA, anchorB, camera, size);
+
+  nodes.Spine2.getWorldPosition(anchorCenter);
+  nodes.LeftArm.getWorldPosition(anchorA).lerp(anchorCenter, 0.5);
+  nodes.RightArm.getWorldPosition(anchorB).lerp(anchorCenter, 0.5);
+  [points.chestLeft, points.chestRight] = sortByScreenX(anchorA, anchorB, camera, size);
+
+  nodes.LeftHand.getWorldPosition(anchorA);
+  nodes.RightHand.getWorldPosition(anchorB);
+  [points.handLeft, points.handRight] = sortByScreenX(anchorA, anchorB, camera, size);
+};
 
 export function Avatar(props) {
-  const { animation, wireframe } = props;
+  const { animation, wireframe, lookAtCursor, showSkillAnchors } = props;
   const { headFollow, cursorFollow } = useControls({
     headFollow: false,
     cursorFollow: false,
   });
   const group = useRef();
+  const pointer = useRef({ x: 0, y: 0 });
+  const lookTarget = useRef(null);
+  const lookBlend = useRef(0);
+
+  useEffect(() => {
+    const handlePointerMove = (e) => {
+      pointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("pointermove", handlePointerMove);
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, []);
   const { nodes, materials } = useGLTF("models/646d9dcdc8a5f5bddbfac913.glb");
 
   const { animations: typingAnimation } = useFBX("animations/Typing.fbx");
@@ -30,13 +91,39 @@ export function Avatar(props) {
     group
   );
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
+    const head = group.current.getObjectByName("Head");
     if (headFollow) {
-      group.current.getObjectByName("Head").lookAt(state.camera.position);
+      head.lookAt(state.camera.position);
     }
     if (cursorFollow) {
       const target = new THREE.Vector3(state.mouse.x, state.mouse.y, 1);
       group.current.getObjectByName("Spine2").lookAt(target);
+    }
+
+    lookBlend.current = THREE.MathUtils.damp(lookBlend.current, lookAtCursor ? 1 : 0, 4, delta);
+    if (lookBlend.current > 0.001) {
+      // Aim at a point beside the camera so the avatar appears to look at the cursor on screen.
+      cursorTarget
+        .set(pointer.current.x * 4, pointer.current.y * 2.5, 0)
+        .applyQuaternion(state.camera.quaternion)
+        .add(state.camera.position);
+      if (!lookTarget.current) {
+        lookTarget.current = cursorTarget.clone();
+      }
+      lookTarget.current.lerp(cursorTarget, 1 - Math.exp(-8 * delta));
+
+      animatedHeadQuaternion.copy(head.quaternion);
+      head.lookAt(lookTarget.current);
+      lookHeadQuaternion.copy(head.quaternion);
+      const angle = animatedHeadQuaternion.angleTo(lookHeadQuaternion);
+      const turn = lookBlend.current * Math.min(1, MAX_HEAD_TURN / Math.max(angle, 1e-4));
+      head.quaternion.slerpQuaternions(animatedHeadQuaternion, lookHeadQuaternion, turn);
+    }
+
+    skillAnchors.visible = Boolean(showSkillAnchors);
+    if (showSkillAnchors) {
+      updateSkillAnchors(nodes, state.camera, state.size);
     }
   });
 

@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
+import '@fontsource-variable/figtree'
+import '@fontsource-variable/figtree/wght-italic.css'
+import '@fontsource/young-serif'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
