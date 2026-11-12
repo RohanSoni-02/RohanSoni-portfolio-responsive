@@ -1,6 +1,11 @@
-import { AnimatePresence, MotionConfig, motion, useInView } from "framer-motion";
+import { MotionConfig, motion, useInView } from "framer-motion";
 import { useAtom } from "jotai";
-import { currentProjectAtom, projects } from "./Projects";
+import {
+  currentProjectAtom,
+  getVisibleProjects,
+  projectCategories,
+  projectFilterAtom,
+} from "./Projects";
 import emailjs from '@emailjs/browser';
 import { useEffect, useRef, useState } from "react";
 import { FiArrowLeft, FiArrowRight, FiArrowUpRight } from "react-icons/fi";
@@ -54,14 +59,14 @@ const AboutSection = (props) => {
   const { setSection } = props;
   return (
     <Section mobileTop>
-      <h1 className="mt-8 md:mt-0 font-extrabold text-gray-900">
-        <span className="block text-2xl md:text-4xl font-bold">Hi, I'm</span>
-        <span className="mt-2 inline-block bg-white px-2 text-5xl md:text-6xl italic leading-tight">
-          Rohan Soni
+      <h1 className="mt-8 md:mt-0 font-serif text-indigo-950">
+        <span className="block text-2xl md:text-3xl text-gray-700">Hi, I'm</span>
+        <span className="mt-1 md:mt-2 block text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight">
+          <span className="md:block">Rohan</span> <span className="md:block">Soni</span>
         </span>
       </h1>
       <motion.div
-        className="mt-5 md:mt-6 max-w-[19rem] md:max-w-[22rem]"
+        className="mt-5 md:mt-7 max-w-[20rem] md:max-w-[22rem]"
         initial={{
           opacity: 0,
           y: 25,
@@ -75,10 +80,10 @@ const AboutSection = (props) => {
           delay: 1.5,
         }}
       >
-        <p className="font-serif text-xl md:text-2xl leading-snug text-gray-900">
+        <p className="text-xl md:text-2xl font-medium leading-snug text-gray-900">
           Software engineer from Melbourne, working across GenAI and DevOps.
         </p>
-        <p className="mt-3 text-base leading-relaxed text-gray-700">
+        <p className="mt-3 text-base md:text-lg leading-relaxed text-gray-700">
           Currently at the University of Melbourne. Let's connect and build
           something great!
         </p>
@@ -100,7 +105,7 @@ const AboutSection = (props) => {
       >
         <button
           onClick={() => setSection(4)}
-          className="bg-indigo-600 hover:bg-indigo-700 transition-colors text-white py-4 px-8 rounded-lg font-bold text-lg"
+          className="bg-indigo-600 hover:bg-indigo-700 transition-colors text-white py-3.5 px-7 rounded-lg font-semibold text-base md:text-lg"
         >
           Contact me
         </button>
@@ -108,7 +113,7 @@ const AboutSection = (props) => {
           href="/resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="py-4 px-8 rounded-lg font-bold text-lg text-gray-900 ring-2 ring-inset ring-gray-900 hover:bg-gray-900 hover:text-white transition-colors"
+          className="py-3.5 px-7 rounded-lg font-semibold text-base md:text-lg text-indigo-950 ring-2 ring-inset ring-indigo-950 hover:bg-indigo-950 hover:text-white transition-colors"
         >
           Resume
         </a>
@@ -520,40 +525,37 @@ const RoleDetail = ({ role, index }) => (
     aria-labelledby={`role-tab-${index}`}
     className="rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur-md p-5 md:p-7"
   >
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={index}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
-      >
-        <p className="text-base font-semibold text-indigo-200">{role.company}</p>
-        {role.program && <p className="text-sm text-white/70">{role.program}</p>}
-        <h3 className="mt-3 font-serif text-2xl md:text-3xl leading-tight text-white">
-          {role.role}
-        </h3>
-        <p className="mt-2 flex flex-wrap gap-x-3 text-sm text-white/60">
-          <span>{role.period.replace(/\s+-\s+/, " – ")}</span>
-          <span className="text-white/40">{formatDuration(role.end - role.start + 1)}</span>
-        </p>
-        <p className="mt-4 text-sm md:text-base leading-relaxed text-white/80">
-          {role.description}
-        </p>
-        {role.tags?.length > 0 && (
-          <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tools and skills">
-            {role.tags.map((tag) => (
-              <li
-                key={tag}
-                className="rounded-full border border-white/15 px-3 py-1 text-xs text-white/75"
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
-        )}
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      key={index}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+    >
+      <p className="text-base font-semibold text-indigo-200">{role.company}</p>
+      {role.program && <p className="text-sm text-white/70">{role.program}</p>}
+      <h3 className="mt-3 font-serif text-2xl md:text-3xl leading-tight text-white">
+        {role.role}
+      </h3>
+      <p className="mt-2 flex flex-wrap gap-x-3 text-sm text-white/60">
+        <span>{role.period.replace(/\s+-\s+/, " – ")}</span>
+        <span className="text-white/40">{formatDuration(role.end - role.start + 1)}</span>
+      </p>
+      <p className="mt-4 text-sm md:text-base leading-relaxed text-white/80">
+        {role.description}
+      </p>
+      {role.tags?.length > 0 && (
+        <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tools and skills">
+          {role.tags.map((tag) => (
+            <li
+              key={tag}
+              className="rounded-full border border-white/15 px-3 py-1 text-xs text-white/75"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
+    </motion.div>
   </div>
 );
 
@@ -645,18 +647,27 @@ const projectLinkLabel = (url) => {
   return "Open live demo";
 };
 
+const stopCanvasClick = (e) => e.stopPropagation();
+
 const ProjectsSection = () => {
   const [currentProject, setCurrentProject] = useAtom(currentProjectAtom);
+  const [category, setCategory] = useAtom(projectFilterAtom);
   const containerRef = useRef();
   const inView = useInView(containerRef, { amount: 0.6 });
-  const project = projects[currentProject];
+  const visibleProjects = getVisibleProjects(category);
+  const project = visibleProjects[currentProject] ?? visibleProjects[0];
 
   const nextProject = () => {
-    setCurrentProject((current) => (current + 1) % projects.length);
+    setCurrentProject((current) => (current + 1) % visibleProjects.length);
   };
 
   const previousProject = () => {
-    setCurrentProject((current) => (current - 1 + projects.length) % projects.length);
+    setCurrentProject((current) => (current - 1 + visibleProjects.length) % visibleProjects.length);
+  };
+
+  const selectCategory = (nextCategory) => {
+    setCategory(nextCategory);
+    setCurrentProject(Math.floor(getVisibleProjects(nextCategory).length / 2));
   };
 
   useEffect(() => {
@@ -667,39 +678,81 @@ const ProjectsSection = () => {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [inView]);
+  }, [inView, visibleProjects.length]);
 
   return (
     <Section>
-      <div ref={containerRef} className="flex w-full h-full items-center justify-center">
-        <div className="relative flex items-center gap-6 md:gap-10">
-          <button
-            className="flex items-center gap-2 font-medium hover:text-white transition-colors"
-            onClick={previousProject}
-          >
-            <FiArrowLeft aria-hidden="true" />
-            Previous
-          </button>
-          <h2 className="text-3xl md:text-5xl font-serif">Projects</h2>
-          <button
-            className="flex items-center gap-2 font-medium hover:text-white transition-colors"
-            onClick={nextProject}
-          >
-            Next
-            <FiArrowRight aria-hidden="true" />
-          </button>
-          <div className="absolute left-1/2 top-full mt-5 -translate-x-1/2 flex flex-col items-center whitespace-nowrap">
-            <p className="flex items-baseline gap-3" aria-live="polite">
-              <span className="font-semibold text-gray-900">{project.title}</span>
-              <span className="text-sm tabular-nums text-gray-900/60">
-                {currentProject + 1} / {projects.length}
+      <div ref={containerRef} className="absolute inset-0">
+        <div className="absolute left-8 right-8 top-[9vh] md:top-[8vh]" onClick={stopCanvasClick}>
+          <h2 className="text-3xl md:text-5xl font-serif text-white">Projects</h2>
+          <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter projects">
+            {projectCategories.map((name) => {
+              const count = getVisibleProjects(name).length;
+              const active = name === category;
+              return (
+                <button
+                  key={name}
+                  onClick={() => selectCategory(name)}
+                  aria-pressed={active}
+                  className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors ${
+                    active
+                      ? "bg-white text-gray-900"
+                      : "bg-white/10 text-white ring-1 ring-inset ring-white/30 hover:bg-white/20"
+                  }`}
+                >
+                  {name}
+                  <span className={`ml-1.5 tabular-nums ${active ? "text-gray-500" : "text-white/60"}`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div
+          className="absolute inset-x-6 md:inset-x-8 top-[57vh] md:top-[56vh] flex flex-col items-center text-center"
+          onClick={stopCanvasClick}
+        >
+          <div aria-live="polite">
+            <motion.div
+              key={project.title}
+              className="flex flex-col items-center"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+            >
+              <h3 className="font-serif text-3xl md:text-4xl text-white">{project.title}</h3>
+              <p className="mt-2 max-w-md text-[15px] md:text-base leading-relaxed text-white/85">
+                {project.description}
+              </p>
+            </motion.div>
+          </div>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={previousProject}
+                aria-label="Previous project"
+                className="grid h-11 w-11 place-items-center rounded-full text-white ring-1 ring-inset ring-white/40 hover:bg-white hover:text-gray-900 transition-colors"
+              >
+                <FiArrowLeft aria-hidden="true" />
+              </button>
+              <span className="w-14 text-sm font-medium tabular-nums text-white/80">
+                {currentProject + 1} / {visibleProjects.length}
               </span>
-            </p>
+              <button
+                onClick={nextProject}
+                aria-label="Next project"
+                className="grid h-11 w-11 place-items-center rounded-full text-white ring-1 ring-inset ring-white/40 hover:bg-white hover:text-gray-900 transition-colors"
+              >
+                <FiArrowRight aria-hidden="true" />
+              </button>
+            </div>
             <a
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-gray-900 px-5 py-3 font-semibold text-white hover:bg-indigo-600 transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-3 font-semibold text-gray-900 hover:bg-indigo-100 transition-colors"
             >
               {projectLinkLabel(project.url)}
               <FiArrowUpRight aria-hidden="true" />
